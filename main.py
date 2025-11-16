@@ -35,4 +35,8 @@ async def main():
     print("Notification sent for:", notifications)
 
 if __name__=="__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except Exception as e:
+        print("❌ ERROR in main process:", e)
+        raise  # Let GitHub Actions mark the run as failed

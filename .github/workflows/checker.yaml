@@ -1,0 +1,67 @@
+name: Amul Stock Checker
+
+on:
+  schedule:
+    - cron: "30 18 * * *"   # 12 AM IST
+    - cron: "30 12 * * *"   # 6 PM IST
+  workflow_dispatch:        # manual run support
+
+jobs:
+  run-checker:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout MAIN (your code)
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      # 2. Create folder to hold automation branch
+      - name: Create automation-state folder
+        run: mkdir -p automation-state
+
+      # 3. Checkout AUTOMATION BRANCH into automation-state/
+      - name: Checkout automation branch into folder
+        uses: actions/checkout@v4
+        with:
+          ref: automation
+          path: automation-state   # clone here
+
+      # 4. Set up Python
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # 5. Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          python -m playwright install chromium
+
+      # 6. Run your scraper
+      - name: Run stock checker
+        env:
+          TWILIO_ENABLE: ${{ secrets.TWILIO_ENABLE }}
+          TWILIO_SID: ${{ secrets.TWILIO_SID }}
+          TWILIO_TOKEN: ${{ secrets.TWILIO_TOKEN }}
+          TWILIO_FROM: ${{ secrets.TWILIO_FROM }}
+          WHATSAPP_TO: ${{ secrets.WHATSAPP_TO }}
+          PINCODE: ${{ secrets.PINCODE }}
+        run: |
+          python main.py
+
+      # 7. Commit updated state.json back to automation branch
+      - name: Commit updated state.json to automation branch
+        run: |
+          cd automation-state
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          # Add & commit changes
+          git add state.json
+          git commit -m "actions: Update stock state" || echo "actions: No changes detected"
+
+          # Push to automation branch
+          git push origin automation

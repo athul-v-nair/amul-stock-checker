@@ -6,7 +6,7 @@ load_dotenv()
 PRODUCT_URL="https://shop.amul.com/en/browse/protein"
 PINCODE=os.getenv("PINCODE")
 
-STATE_FILE="state.json"
+STATE_FILE="automation-state/state.json"
 PRODUCT_NAMES=[
     "Amul High Protein Rose Lassi",
     "Amul High Protein Plain Lassi"
