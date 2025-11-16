@@ -52,6 +52,12 @@ jobs:
         run: |
           python main.py
 
+      # 6.5 Debug automation-state folder
+      - name: Debug automation-state folder
+        run: |
+          echo "----- automation-state folder contents -----"
+          ls -R automation-state
+
       # 7. Commit updated state.json back to automation branch
       - name: Commit updated state.json to automation branch
         run: |
