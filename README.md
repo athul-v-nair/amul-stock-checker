@@ -94,6 +94,7 @@ python -m playwright install
 Create a `.env` file in the root directory:
 
     # Twilio WhatsApp
+    TWILIO_ENABLE=1
     TWILIO_SID=your_twilio_sid
     TWILIO_TOKEN=your_twilio_auth_token
     TWILIO_FROM=whatsapp:+1415523XXXX   # Twilio WhatsApp sandbox number
@@ -138,4 +139,4 @@ python main.py
 
 ## Contributions
 
--   Contributions are welcome! If you'd like to improve the scraper, fix bugs, or add new features please free to do so.
+Contributions are welcome! If you'd like to improve the scraper, fix bugs, or add new features please free to do so.
