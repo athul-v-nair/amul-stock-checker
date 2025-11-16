@@ -3,7 +3,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-product_url=os.getenv("PRODUCT_URL")
-pincode=os.getenv("PIN_CODE")
+PRODUCT_URL="https://shop.amul.com/en/browse/protein"
+PINCODE=os.getenv("PINCODE")
+
+STATE_FILE="state.json"
+PRODUCT_NAMES=[
+    "Amul High Protein Rose Lassi",
+    "Amul High Protein Plain Lassi"
+]
 
 ENABLE_TWILIO = os.getenv("TWILIO_ENABLE") == "1"
